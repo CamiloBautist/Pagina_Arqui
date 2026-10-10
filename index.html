@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#071326">
+  <title>Validación modo real y modo protegido</title>
+  <link rel="stylesheet" href="css/styles.css">
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#inicio" aria-label="Ir al inicio">
+      <span class="brand-icon">⌘</span>
+      <span><strong>Validación modo real<br>y modo protegido</strong><small>ARQUITECTURA DE COMPUTADORES · x86</small></span>
+    </a>
+    <button class="mobile-menu" id="mobileMenu" aria-label="Abrir navegación">☰</button>
+    <div class="top-tag"><span class="status-dot"></span> LABORATORIO INTERACTIVO</div>
+  </header>
+
+  <aside class="sidebar" id="sidebar">
+    <p class="nav-label">MENÚ PRINCIPAL</p>
+    <a class="nav-link active" href="#inicio"><span>⌂</span> Inicio</a>
+    <a class="nav-link" href="#modo-real"><span>▦</span> Modo real</a>
+    <a class="nav-link" href="#modo-protegido"><span>⬡</span> Modo protegido</a>
+    <a class="nav-link" href="#reversing"><span>01</span> Descriptor Reversing</a>
+    <a class="nav-link" href="#retos"><span>♧</span> Laboratorio de retos</a>
+    <div class="sidebar-note">
+      <span class="note-symbol">⌁</span>
+      <p>Aprende, simula y comprende el direccionamiento de memoria.</p>
+    </div>
+  </aside>
+
+  <main class="main-content" id="inicio">
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">BIENVENIDO AL LABORATORIO</p>
+        <h1>Comprende el<br><span>direccionamiento x86</span></h1>
+        <p class="hero-description">Explora cómo se calculan las direcciones de memoria en modo real y modo protegido. Prueba valores, sigue el procedimiento y aprende con simulaciones interactivas.</p>
+        <a class="primary-button" href="#modulos">▶ &nbsp; Explorar módulos</a>
+      </div>
+      <div class="chip-art" aria-hidden="true">
+        <div class="circuit circuit-one"></div><div class="circuit circuit-two"></div>
+        <div class="chip"><span>x86</span><small>PROCESSOR</small></div>
+        <div class="binary">01001000<br>11001010<br>10110101<br>00101101</div>
+      </div>
+      <div class="hero-glow"></div>
+    </section>
+
+    <section class="section-heading" id="modulos">
+      <div><p class="eyebrow">APRENDE HACIENDO</p><h2>Módulos del simulador</h2></div>
+      <p>Selecciona un módulo para explorar sus conceptos.</p>
+    </section>
+
+    <section class="module-grid">
+      <article class="module-card real-card" id="modo-real">
+        <div class="card-top"><div class="module-icon">▦</div><span class="module-number">MÓDULO 01</span></div>
+        <h3>Modo real</h3>
+        <p>Ingresa un segmento y un desplazamiento para calcular la dirección física y revisar cada paso de la operación.</p>
+        <div class="formula-box"><small>FÓRMULA DE DIRECCIONAMIENTO</small><code>Dirección física = (Segmento × 16) + Offset</code></div>
+        <a class="outline-button" href="#simulador-real">Abrir simulador <span>→</span></a>
+      </article>
+
+      <article class="module-card protected-card" id="modo-protegido">
+        <div class="card-top"><div class="module-icon">⬡</div><span class="module-number">MÓDULO 02</span></div>
+        <h3>Modo protegido</h3>
+        <p>Comprende cómo el selector referencia un descriptor y cómo se obtiene la dirección lineal a partir de la base y el desplazamiento.</p>
+        <div class="mini-flow"><span>Selector</span><b>→</b><span>GDT / LDT</span><b>→</b><span>Descriptor</span></div>
+        <a class="outline-button" href="#simulador-protegido">Abrir simulador <span>→</span></a>
+      </article>
+
+      <article class="module-card reversing-card" id="reversing">
+        <div class="card-top"><div class="module-icon binary-icon">010<br>101</div><span class="module-number">MÓDULO 03</span></div>
+        <h3>Descriptor Reversing</h3>
+        <p>Analiza un descriptor binario de 64 bits y conoce los campos que lo componen: base, límite, permisos y atributos.</p>
+        <div class="bit-strip"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        <a class="outline-button" href="#simulador-reversing">Explorar descriptor <span>→</span></a>
+      </article>
+    </section>
+
+    <section class="simulator-panel" id="simulador-real">
+      <div class="panel-heading"><div><p class="eyebrow">SIMULADOR 01</p><h2>Validación de modo real</h2></div><span class="panel-badge blue">CÁLCULO BÁSICO</span></div>
+      <p class="panel-intro">Introduce los valores en hexadecimal. Por ejemplo, segmento <code>1234</code> y offset <code>0010</code>.</p>
+      <div class="form-grid">
+        <label>Segmento (hexadecimal)<input id="segment" value="1234" maxlength="4" inputmode="text" autocomplete="off"><small>Rango: 0000–FFFF</small></label>
+        <label>Desplazamiento / Offset (hexadecimal)<input id="offset" value="0010" maxlength="4" inputmode="text" autocomplete="off"><small>Rango: 0000–FFFF</small></label>
+      </div>
+      <button class="primary-button" id="calculateReal">Calcular dirección física →</button>
+      <p class="error-message" id="realError" role="alert"></p>
+      <div class="result-box" id="realResult" aria-live="polite">
+        <div><small>DIRECCIÓN FÍSICA (HEX)</small><strong id="physicalHex">12350</strong></div>
+        <div><small>DIRECCIÓN FÍSICA (DECIMAL)</small><strong id="physicalDec">74576</strong></div>
+      </div>
+      <div class="steps-box"><h3>Procedimiento paso a paso</h3><ol id="realSteps"><li>Convertir el segmento a hexadecimal numérico.</li><li>Multiplicar el segmento por 16 (desplazar 4 bits a la izquierda).</li><li>Sumar el desplazamiento al resultado anterior.</li></ol></div>
+    </section>
+
+    <section class="simulator-panel" id="simulador-protegido">
+      <div class="panel-heading"><div><p class="eyebrow">SIMULADOR 02 · VISTA PRELIMINAR</p><h2>Validación de modo protegido</h2></div><span class="panel-badge teal">SEGMENTACIÓN</span></div>
+      <p class="panel-intro">Este módulo queda preparado visualmente para conectar la lógica del integrante responsable. La dirección lineal se obtiene sumando la base del segmento y el desplazamiento, después de validar el descriptor y el acceso.</p>
+      <div class="protected-preview">
+        <div class="preview-step"><span>01</span><strong>Selector</strong><small>Índice + TI + RPL</small></div><b>→</b>
+        <div class="preview-step"><span>02</span><strong>GDT / LDT</strong><small>Tabla de descriptores</small></div><b>→</b>
+        <div class="preview-step"><span>03</span><strong>Descriptor</strong><small>Base + límite + atributos</small></div>
+      </div>
+      <div class="placeholder-fields">
+        <label>Selector (hexadecimal)<input placeholder="Ej. 0008" disabled></label>
+        <label>Tipo de segmento<select disabled><option>Seleccionar CS, DS o SS</option></select></label>
+        <label>Desplazamiento<input placeholder="Se configurará al integrar el módulo" disabled></label>
+      </div>
+      <div class="notice">Módulo visual preparado: falta conectar la interpretación del selector, la lectura del descriptor, los límites y los permisos.</div>
+    </section>
+
+    <section class="simulator-panel" id="simulador-reversing">
+      <div class="panel-heading"><div><p class="eyebrow">SIMULADOR 03 · VISTA PRELIMINAR</p><h2>Descriptor Reversing</h2></div><span class="panel-badge violet">ANÁLISIS BINARIO</span></div>
+      <p class="panel-intro">Aquí se analizará una entrada binaria de 64 bits que represente un descriptor x86 clásico de segmento.</p>
+      <label class="full-label">Descriptor binario (64 bits)<textarea rows="3" placeholder="Escribe los 64 bits del descriptor..." disabled></textarea></label>
+      <div class="bit-legend"><span class="base-key">BASE</span><span class="limit-key">LÍMITE</span><span class="access-key">ACCESO</span><span class="flags-key">FLAGS</span></div>
+      <div class="notice">Módulo visual preparado: se añadirá validación de longitud, decodificación de campos y descripción de atributos.</div>
+    </section>
+
+    <section class="challenge-banner" id="retos">
+      <div class="challenge-symbol">♜</div><div><p class="eyebrow">PON A PRUEBA LO APRENDIDO</p><h2>Laboratorio de retos</h2><p>Próximamente: ejercicios guiados, preguntas de comprobación y desafíos progresivos sobre direccionamiento.</p></div><span class="coming-soon">PRÓXIMAMENTE</span>
+    </section>
+
+    <footer><span>Validación modo real y modo protegido</span><span>Arquitectura de Computadores · x86</span><a href="#inicio">Volver arriba ↑</a></footer>
+  </main>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "name": "validacion-modo-real-y-protegido",
+  "version": "1.0.0",
+  "description": "Laboratorio interactivo de direccionamiento x86: modo real, modo protegido y descriptores.",
+  "private": true,
+  "license": "UNLICENSED",
+  "engines": { "node": ">=18" },
+  "scripts": {
+    "start": "node serve.js",
+    "build": "node build.js",
+    "preview": "node serve.js --dist",
+    "test": "node --test test/modo-real.test.js test/modo-protegido.test.js"
+  }
+}
