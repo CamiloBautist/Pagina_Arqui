@@ -23,14 +23,16 @@ for (const f of jsFiles(SRC)) {
 }
 
 // Comprueba que index.html referencie archivos que existen
-const html = fs.readFileSync(path.join(SRC, "index.html"), "utf8");
-for (const m of html.matchAll(/(?:src|href)="((?:js|css)\/[^"]+)"/g)) {
+const html = fs.readFileSync(path.join(__dirname, "index.html"), "utf8");
+for (const m of html.matchAll(/(?:src|href)="src\/((?:js|css)\/[^"]+)"/g)) {
   if (!fs.existsSync(path.join(SRC, m[1]))) {
-    console.error(`✖ index.html referencia un archivo inexistente: ${m[1]}`);
+    console.error(`✖ index.html referencia un archivo inexistente: src/${m[1]}`);
     process.exit(1);
   }
 }
 
 fs.rmSync(DIST, { recursive: true, force: true });
-fs.cpSync(SRC, DIST, { recursive: true });
+fs.mkdirSync(DIST);
+fs.cpSync(SRC, path.join(DIST, "src"), { recursive: true });
+fs.copyFileSync(path.join(__dirname, "index.html"), path.join(DIST, "index.html"));
 console.log(`✔ Build listo en dist/ (${fs.readdirSync(DIST).length} elementos en la raíz)`);

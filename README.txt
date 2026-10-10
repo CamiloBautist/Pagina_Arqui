@@ -9,19 +9,19 @@ y (próximamente) analizar descriptores binarios de 64 bits. No tiene dependenci
 
 | Comando | Qué hace |
 |---|---|
-| `npm start` | Servidor local con `src/` en http://localhost:5173 |
+| `npm start` | Servidor local en http://localhost:5173 |
 | `npm test` | Ejecuta las pruebas de las clases (`node --test`) |
 | `npm run build` | Valida sintaxis y referencias, y genera `dist/` listo para publicar |
 | `npm run preview` | Sirve `dist/` para revisar el build |
 
 > No hace falta `npm install`. Para publicar, sube el contenido de `dist/` a cualquier hosting estático (GitHub Pages, Netlify…).
-> También funciona abriendo `src/index.html` directamente en el navegador.
+> También funciona abriendo `index.html` directamente en el navegador.
 
 ## Estructura
 
 ```
+index.html
 src/
-  index.html
   css/styles.css
   js/
     modo-real.js        ← clase ModoReal        (lógica pura, sin DOM)
